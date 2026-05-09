@@ -1081,11 +1081,11 @@ function ExportScript.LoAircraftInfo(mainPanelDevice)
   local lHydraulicPressureRight =  engineInfo.HydraulicPressure.right -- {left ,right},kg per square centimeter
  
   ExportScript.Tools.SendData(8000, aircraftName)
-  
+
   ExportScript.Tools.SendData(8001, pilotName)
-  
+
   ExportScript.Tools.SendData(8002, 'Real Time\n'.. realTimeLocal .. '\nDCS Time\n' .. dcsTimeLocal) -- clocks
-  
+
   ExportScript.Tools.SendData(8003, 'HDG ' .. prefixZerosFixedLength(round(aircraftHeading,0),3)  .. 'º'
                                     .. '\nALT ' .. format_int(round(altMsl_feet,-1)) .. ' ft'
                                     .. '\nIAS ' .. round(ias_knots,0)  .. ' kts'
@@ -1103,23 +1103,30 @@ function ExportScript.LoAircraftInfo(mainPanelDevice)
                                     .. '\nIAS ' .. round(ias_mph,0)  .. ' mph'
                                     .. '\nV/S ' .. format_int(round(verticalVelocity_imperial,-2)) .. ' ft/min'
                                     ) -- Aircraft Instrument panel (western ww2)
-                                  
-  ExportScript.Tools.SendData(8006, "Lat-Long-DMS\n" .. formatCoord("DMS",true, lLatitude) 
+
+  ExportScript.Tools.SendData(8006, "Lat-Long-DMS\n" .. formatCoord("DMS",true, lLatitude)
                                     .. "\n" .. formatCoord("DMS",false, lLongitude)
                                     ) -- Player coordinates in DMS
 
-  ExportScript.Tools.SendData(8007, "Lat-Long-DDM\n" .. formatCoord("DDM",true, lLatitude) 
+  ExportScript.Tools.SendData(8007, "Lat-Long-DDM\n" .. formatCoord("DDM",true, lLatitude)
                                     .. "\n" .. formatCoord("DDM",false, lLongitude)
                                     ) -- Player coordinates in DDM
 
   ExportScript.Tools.SendData(8008, 'MGRS\n'.. mgrsTable[1][1] .. ' ' .. mgrsTable[1][2] 
-                                    .. '\n' .. mgrsTable[1][3] .. ' ' .. mgrsTable[1][4]
+                                    .. '\n' .. mgrsTable[1][3] .. '\n' .. mgrsTable[1][4]
                                     ) -- Player coordinates in MGRS on 2 rows + title
 
   ExportScript.Tools.SendData(8009, 'Mag Var\n' .. format_int(round(magneticVariance, 2))) -- also called magnetic deviation
   
   -- Example for using the Lo Data. Feel free to make your own!
   ExportScript.Tools.SendData(8010, format_int(round(kgPerSecond2poundPerHour(lFuelConsumptionLeft), -1))) -- fuel use in pph
+
+  ExportScript.Tools.SendData(8020, 'DCS Time\n' .. dcsTimeLocal) -- clocks
+
+  ExportScript.Tools.SendData(8030, 'HDG\n' .. prefixZerosFixedLength(round(aircraftHeading,0),3)  .. 'º') -- Heading (western)
+  ExportScript.Tools.SendData(8031, 'ALT\n' .. format_int(round(altMsl_feet,-1)) .. ' ft') -- Altitude (western)
+  ExportScript.Tools.SendData(8032, 'IAS\n' .. round(ias_knots,0)  .. ' kts') -- IAS (western)
+  ExportScript.Tools.SendData(8033, 'V/S\n' .. format_int(round(verticalVelocity_imperial,-2)) .. ' ft/min') -- vertical speed (western)
   
 end
 function ExportScript.AirportInfo(mainPanelDevice)
