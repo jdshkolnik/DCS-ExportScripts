@@ -1124,7 +1124,9 @@ function ExportScript.LoAircraftInfo(mainPanelDevice)
   ExportScript.Tools.SendData(8020, 'DCS Time\n' .. dcsTimeLocal) -- clocks
 
   ExportScript.Tools.SendData(8030, 'HDG\n' .. prefixZerosFixedLength(round(aircraftHeading,0),3)  .. 'º') -- Heading (western)
-  ExportScript.Tools.SendData(8031, 'ALT\n' .. format_int(round(altMsl_feet,-1)) .. ' ft') -- Altitude (western)
+  ExportScript.Tools.SendData(8031, 'BALT\n' .. format_int(round(altMsl_feet,-1)) .. ' ft' -- Altitude (western)
+                                    .. '\nRALT\n' .. format_int(round(altAgl_feet,-1)) .. ' ft'
+																	)
   ExportScript.Tools.SendData(8032, 'IAS\n' .. round(ias_knots,0)  .. ' kts') -- IAS (western)
   ExportScript.Tools.SendData(8033, 'V/S\n' .. format_int(round(verticalVelocity_imperial,-2)) .. ' ft/min') -- vertical speed (western)
   
